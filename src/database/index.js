@@ -2,10 +2,12 @@
 import Sequelize from 'sequelize';
 // importação do model
 import User from '../app/models/User';
+import Recipients from '../app/models/Recipients';
 // importação das configurações de conexão
 import dabaseConfig from '../config/database';
+
 // models
-const models = [User];
+const models = [User, Recipients];
 
 class Database {
   constructor() {
@@ -20,4 +22,4 @@ class Database {
   }
 }
 
-export default Database;
+export default new Database();

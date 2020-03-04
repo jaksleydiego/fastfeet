@@ -1,9 +1,21 @@
 import jwt from 'jsonwebtoken';
+import * as Yup from 'yup';
 import User from '../models/User';
 import authConfig from '../../config/auth';
 
 class SessionController {
   async store(req, res) {
+    const schema = Yup.object().shape({
+      email: Yup.string()
+        .email()
+        .required(),
+      password: Yup.string().required(),
+    });
+
+    // verifica se o schema foi validadox
+    if (!(await schema.isValid(req.body))) {
+      return res.status(401).json({ error: 'validations fails' });
+    }
     // guarda nas váriaveis os dados do formulário
     const { email, password } = req.body;
     // faz a busca no bd pelo email de um  usuário
